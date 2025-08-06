@@ -1,9 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageToggle from "@/components/LanguageToggle";
 import {
   BookOpen,
   Eye,
@@ -15,6 +18,8 @@ import {
 } from "lucide-react";
 
 const Auth = () => {
+  const navigate = useNavigate();
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: "", password: "" });
   const [registerData, setRegisterData] = useState({
@@ -26,12 +31,14 @@ const Auth = () => {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Login:", loginData);
+    localStorage.setItem('isAuthenticated', 'true');
+    navigate('/my-banks');
   };
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Register:", registerData);
+    localStorage.setItem('isAuthenticated', 'true');
+    navigate('/my-banks');
   };
 
   return (
@@ -50,6 +57,11 @@ const Auth = () => {
       </div>
 
       <div className="w-full max-w-md relative">
+        {/* Language Toggle */}
+        <div className="absolute top-4 right-4">
+          <LanguageToggle />
+        </div>
+
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center space-x-2 mb-4">
@@ -61,7 +73,7 @@ const Auth = () => {
             </span>
           </div>
           <p className="text-white/90 text-lg">
-            Join thousands of successful students
+            {t('auth.joinStudents')}
           </p>
         </div>
 
@@ -70,10 +82,10 @@ const Auth = () => {
           <Tabs defaultValue="login" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="login" className="font-medium">
-                Sign In
+                {t('auth.signIn')}
               </TabsTrigger>
               <TabsTrigger value="register" className="font-medium">
-                Sign Up
+                {t('auth.signUp')}
               </TabsTrigger>
             </TabsList>
 
@@ -85,14 +97,14 @@ const Auth = () => {
                     htmlFor="login-email"
                     className="text-gray-700 font-medium"
                   >
-                    Email Address
+                    {t('auth.email')}
                   </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input
                       id="login-email"
                       type="email"
-                      placeholder="Enter your email"
+                      placeholder={t('auth.enterEmail')}
                       className="pl-10 py-3 rounded-xl border-gray-200 focus:border-primary"
                       value={loginData.email}
                       onChange={(e) =>
@@ -108,14 +120,14 @@ const Auth = () => {
                     htmlFor="login-password"
                     className="text-gray-700 font-medium"
                   >
-                    Password
+                    {t('auth.password')}
                   </Label>
                   <div className="relative">
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                     <Input
                       id="login-password"
                       type={showPassword ? "text" : "password"}
-                      placeholder="Enter your password"
+                      placeholder={t('auth.enterPassword')}
                       className="pl-10 pr-10 py-3 rounded-xl border-gray-200 focus:border-primary"
                       value={loginData.password}
                       onChange={(e) =>
@@ -143,13 +155,13 @@ const Auth = () => {
                       type="checkbox"
                       className="rounded border-gray-300"
                     />
-                    <span>Remember me</span>
+                    <span>{t('auth.rememberMe')}</span>
                   </label>
                   <a
                     href="#"
                     className="text-sm text-primary hover:text-primary/80 font-medium transition-colors"
                   >
-                    Forgot password?
+                    {t('auth.forgotPassword')}
                   </a>
                 </div>
 
@@ -157,7 +169,7 @@ const Auth = () => {
                   type="submit"
                   className="w-full gradient-primary text-white border-0 py-3 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
                 >
-                  Sign In
+                  {t('auth.signIn')}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </form>
@@ -320,7 +332,7 @@ const Auth = () => {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-white/80 text-sm">
-            Trusted by 50,000+ students worldwide
+            {t('auth.trustedBy')}
           </p>
         </div>
       </div>
