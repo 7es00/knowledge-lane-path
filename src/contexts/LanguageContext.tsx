@@ -2,7 +2,6 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface LanguageContextType {
   language: 'en' | 'ar';
-  setLanguage: (lang: 'en' | 'ar') => void;
   t: (key: string) => string;
   dir: 'ltr' | 'rtl';
 }
@@ -155,14 +154,7 @@ const translations = {
 };
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<'en' | 'ar'>('en');
-
-  const setLanguage = (lang: 'en' | 'ar') => {
-    setLanguageState(lang);
-    localStorage.setItem('language', lang);
-    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = lang;
-  };
+  const [language] = useState<'en' | 'ar'>('ar');
 
   const t = (key: string): string => {
     const keys = key.split('.');
@@ -176,19 +168,17 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   };
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as 'en' | 'ar' | null;
-    if (savedLanguage) {
-      setLanguage(savedLanguage);
-    }
+    // Set Arabic as default
+    document.documentElement.dir = 'rtl';
+    document.documentElement.lang = 'ar';
   }, []);
 
   return (
     <LanguageContext.Provider 
       value={{ 
         language, 
-        setLanguage, 
         t, 
-        dir: language === 'ar' ? 'rtl' : 'ltr' 
+        dir: 'rtl'
       }}
     >
       {children}

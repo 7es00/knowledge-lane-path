@@ -6,7 +6,6 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageToggle from "@/components/LanguageToggle";
 import {
   BookOpen,
   Eye,
@@ -57,10 +56,6 @@ const Auth = () => {
       </div>
 
       <div className="w-full max-w-md relative">
-        {/* Language Toggle */}
-        <div className="absolute top-4 right-4">
-          <LanguageToggle />
-        </div>
 
         {/* Logo */}
         <div className="text-center mb-8">

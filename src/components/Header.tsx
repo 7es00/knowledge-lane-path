@@ -5,17 +5,18 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, BookOpen, User, ShoppingBag, LogOut } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
-  // التعديل: الرابط الخاص بالسكشن هيكون id بدون slash
   const navigation = [
-    { name: "Question Banks", href: "/" },
-    { name: "My Banks", href: "/my-banks" },
-    { name: "Features", href: "#features" }, // فقط #features
+    { name: t('header.home'), href: "/" },
+    { name: t('header.myBanks'), href: "/my-banks" },
+    { name: t('header.features'), href: "#features" },
   ];
 
   const goToLogin = () => { navigate('/auth') }
@@ -110,10 +111,10 @@ const Header = () => {
             ) : (
               <>
                 <Button variant="ghost" size="sm" onClick={goToLogin}>
-                  Login
+                  {t('header.login')}
                 </Button>
                 <Button className="btn-primary" onClick={goToLogin}>
-                  Sign Up
+                  {t('header.signup')}
                 </Button>
               </>
             )}
@@ -181,10 +182,10 @@ const Header = () => {
                   ) : (
                     <>
                       <Button variant="ghost" className="w-full" onClick={goToLogin}>
-                        Login
+                        {t('header.login')}
                       </Button>
                       <Button className="btn-primary w-full" onClick={goToLogin}>
-                        Sign Up
+                        {t('header.signup')}
                       </Button>
                     </>
                   )}

@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/contexts/LanguageContext";
-import LanguageToggle from "@/components/LanguageToggle";
 import {
   BookOpen,
   Clock,
@@ -71,7 +70,6 @@ const MyBanks = () => {
             </p>
           </div>
           <div className="flex items-center space-x-4">
-            <LanguageToggle />
             <div className="flex items-center space-x-2 text-sm text-gray-500">
               <Shield className="w-4 h-4" />
               <span>Single Device Access Active</span>
